@@ -2,7 +2,7 @@
 
 Hashes are like arrays.  They are a data structure, and therefore store data.
 
-### New Hashes
+## New Hashes
 
 New, empty hashes can be created the following ways:
 
@@ -30,6 +30,8 @@ Note, `key` and `key_two` here are assumed to be symbols, that is `key:` is equi
 hash_seven = { key: "value", key_two: "value_two" }
 ```
 
+## Setting values for existing hashes
+
 Where arrays have a integer based indexing system, hashes are much more flexible.  You can use any object to index your hash.  Things like integers, strings, arrays, symbols, and even other hashes are all valid keys.
 
 ```ruby
@@ -46,7 +48,7 @@ hash_two[5] # => nil
 hash_three['catoblepas'] # => true
 ```
 
-### Hashes and Blocks
+# Hashes and Blocks, Revenge of the New
 
 ```ruby
 hash_four = Hash.new do |hash,key| 
@@ -63,6 +65,8 @@ hash_four # { :ennui => [] }
 
 So when we try to access the unstored key, `:ennui`, the block executes and assigns to `hash_four` the pair `:ennui` and `Array.new`, so after accessing the key `:ennui`, we are storing a new array at that address.
 
+## Keys and Values
+
 Sometimes we want to know what keys are being stored in our hash, maybe to make note of them so that we can use them later to access the values.  Or perhaps we want to access the values, as well, since that's the data that's being stored.  We have instance methods: keys *and* values.  Using hash_one from above:
 
 ```ruby
@@ -70,9 +74,13 @@ hash_one.keys # [ 5, 'this', :one ]
 hash_one.values # [ true, 'that', 5 ]
 ```
 
-Why might we want to use a hash instead of an array?  One reason is the fact that you are pairing up information that can be accessed by keys which describe the data rather than indices which are sometimes meaningless.
+## Hash vs. Array
 
-Watch out!  Nested hashes ahead!!
+Why might we want to use a hash instead of an array?  
+
+### Meaning as Syntax
+
+One reason is the fact that you are pairing up information that can be accessed by keys which describe the data rather than indices which are sometimes meaningless. **Watch out!  Nested hashes ahead!!**
 
 ```ruby
 user_list = {
@@ -89,7 +97,7 @@ user_list = {
 }
 ```
 
-Here :user_1 and :user_2 both point to more hashes.  That means that user_list[:user_1] is another hash, and so we can access it's values by addressing the keys stored therein. 
+Here `:user_1` and `:user_2` both point to more hashes.  That means that `user_list[:user_1]` is also a hash, and so we can access its values by addressing the keys stored therein. 
 
 ```ruby
 user_list[:user_1] # => { :name => "Matthew", :email => "short.matthew.f@gmail.com", :age => 35 }
@@ -97,11 +105,16 @@ user_list[:user_1][:name] # "Matthew"
 user_list[:user_2][:age] # 27
 ```
 
+### Looking Things Up
+
 Another important reason to use a hash over an array is the speed of finding something.  To find something in an array you might have to look at each and every element in the array.  
 
 If we ask if `[1, 3, 21, 8, 9, 16, 33, 58, 14]` contains the number 15, we would scan from left to right checking if each entry is equal to 15.  This is somewhat slow.
 
-However, if we ask if `{ 1 => true, 3 => true, 21 => true, ... }`, then asking if 15 is a key is as simple as trying to access it.  `my_hash[15]` will return the default value of `nil`.
+However, if we look at `{ 1 => true, 3 => true, 21 => true, ... }`, then asking if 15 is a key is as simple as trying to access it.  `my_hash[15]` will return the default value of `nil`, and so we would know it's not a key.
+
+
+## Two more methods
 
 What are some other super useful hash instance methods?
 
@@ -124,7 +137,9 @@ b = { :two => :two, :three => 3 }
 a.merge(b) # => { one: 1, two: two, three: 3 }
 ```
 
-Lastly, since you're linking two pieces of data as a pair, hashes are incredibly useful as arguments for methods.  In fact, they're so useful you will frequently encouter THE OPTIONS HASH.
+## Famous Use Case
+
+Since you're linking two pieces of data as a pair, hashes are incredibly useful as arguments for methods.  In fact, they're so useful you will frequently encouter **the options hash**.
 
 ```ruby
 def my_method(name, options = {})
@@ -138,7 +153,7 @@ def my_method(name, options = {})
 end
 ```
 
-So, let's dissect what we expect as input first.  Here, my_method takes two inputs, a name and an options hash.  options = {} will allow us to only call the method with a name, and provide the empty hash to the variable options if we do.  Here's are some valid inputs:
+So, let's dissect what we expect as input first.  Here, my_method takes two inputs, a name and an options hash.  The argument `options = {}` sets a default empty hash for `options` if none is supplied, and thus will allow us to call the method with only the name.  Here's are some valid inputs:
 
 ```ruby
 my_method("Matthew") # I'm not talking to you right now.
