@@ -10,7 +10,6 @@ New, empty hashes can be created the following ways:
 hash_one = Hash.new
 hash_two = {}
 hash_three = Hash.new(true)
-hash_four = Hash.new { |hash,key| hash[key] = Array.new }
 ```
 
 Nonempty hashes can be created like this:
@@ -47,7 +46,15 @@ hash_two[5] # => nil
 hash_three['catoblepas'] # => true
 ```
 
-From above, `hash_four` is a bit funny, thanks to the block we passed to the new method for the hash class.  The code inside is actually executed anytime an unstored key is accessed.  
+### Hashes and Blocks
+
+```ruby
+hash_four = Hash.new do |hash,key| 
+	hash[key] = Array.new
+end
+```
+
+From above, `hash_four` is a bit funny, thanks to the block we passed to the `new` method for the hash class.  The code inside is actually executed anytime an unstored key is accessed:
 
 ```ruby
 hash_four[:ennui] # => []
