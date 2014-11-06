@@ -30,7 +30,9 @@ Note, `key` and `key_two` here are assumed to be symbols, that is `key:` is equi
 hash_seven = { key: "value", key_two: "value_two" }
 ```
 
-## Setting values for existing hashes
+## Setting and getting values for existing hashes
+
+### Setting
 
 Where arrays have a integer based indexing system, hashes are much more flexible.  You can use any object to index your hash.  Things like integers, strings, arrays, symbols, and even other hashes are all valid keys.
 
@@ -40,7 +42,18 @@ hash_one['this'] = 'that' # hash_one == { 5 => true, 'this' => 'that' }
 hash_one[:one] = 5 # hash_one == { 5 => true, 'this' => 'that', :one => 5 }
 ```
 
-We were just assigning values to keys, and when you access a hash by a stored key, you get a stored value.  However, if there is no stored value, a hash will still return something.  That's called the default value.
+### Getting
+
+Here, we will do the same thing we do when accessing elements of an array, but instead of integer indices we'll just use the keys to access the corresponding value.
+
+```ruby
+hash_one[:one] # 5
+hash_one['this'] # 'that'
+```
+
+### Default Values
+
+However, if there is no stored value, a hash will still return something.  That's called the default value.
 
 ```ruby
 hash_one[:two] # => nil
